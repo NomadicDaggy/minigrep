@@ -1,7 +1,0 @@
-# See https://pre-commit.com for more information       
-# See https://pre-commit.com/hooks.html for more hooks  
-repos:
--   repo: https://github.com/NomadicDaggy/pre-commit-rust
-    rev: 51fcbef60008c61c51a3314c7436390ff01d693d
-    hooks:
-    -   id: cargo-fmt

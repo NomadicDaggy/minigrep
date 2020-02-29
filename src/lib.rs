@@ -28,7 +28,6 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     let contents = fs::read_to_string(config.filename)?; // ? will return error value upstream
 
     for line in search(&config.query, &contents) {
-        
         println!("{}", line);
     }
 
