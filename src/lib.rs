@@ -27,6 +27,10 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     // Read file
     let contents = fs::read_to_string(config.filename)?; // ? will return error value upstream
 
+    for line in search(&config.query, &contents) {
+        println!("{}", line);
+    }
+
     Ok(())
 }
 
@@ -43,6 +47,7 @@ pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
         }
     }
 
+    // Returns vector with all the passing rows
     results
 }
 
