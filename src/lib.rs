@@ -27,7 +27,27 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     // Read file
     let contents = fs::read_to_string(config.filename)?; // ? will return error value upstream
 
-    println!("With text:\n{}", contents);
-
     Ok(())
+}
+
+// The data referenced by a slice needs to be valud for the reference to be valid.
+pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
+    vec![]
+}
+
+// --- Tests
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn one_result() {
+        let query = "duct";
+        let contents = "\
+Rust:
+safe, fast, productive.
+Pick three.";
+
+        assert_eq!(vec!["safe, fast, productive."], search(query, contents));
+    }
 }

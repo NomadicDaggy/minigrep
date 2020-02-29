@@ -13,9 +13,6 @@ fn main() {
         process::exit(1); // exit the program
     });
 
-    println!("Searching for \"{}\"", config.query);
-    println!("In file       \"{}\"", config.filename);
-
     // if let was somewhat similar to unwrap_or_else
     if let Err(e) = minigrep::run(config) {
         println!("Application error: {}", e);
