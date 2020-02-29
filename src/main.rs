@@ -26,6 +26,10 @@ struct Config {
 
 impl Config {
     fn new(args: &[String]) -> Config {
+        if args.len() < 3 {
+            panic!("Not enough arguments");
+        }
+
         // Save args into variables
         // We have to use clone() here because args in the main function owns the values
         // and will only let us borrow them.
