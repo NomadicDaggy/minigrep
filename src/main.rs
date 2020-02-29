@@ -1,4 +1,4 @@
-use std::{env, fs, process};
+use std::{env, error::Error, fs, process};
 
 fn main() {
     // args returns an iterator of the cli arguments
@@ -14,15 +14,23 @@ fn main() {
     println!("Searching for \"{}\"", config.query);
     println!("In file       \"{}\"", config.filename);
 
-    run(config);
+    // if let was somewhat similar to unwrap_or_else
+    if let Err(e) = run(config) {
+        println!("Application error: {}", e);
+
+        process::exit(1);
+    };
 }
 
-fn run(config: Config) {
-    // -------- Read file
-    let contents =
-        fs::read_to_string(config.filename).expect("Something went wrong reading the file");
+// Box<dyn Error> is a trait object. It needs Error brought in at the top.
+// It stands for a type that implements the Error trait.
+fn run(config: Config) -> Result<(), Box<dyn Error>> {
+    // Read file
+    let contents = fs::read_to_string(config.filename)?; // ? will return error value upstream
 
     println!("With text:\n{}", contents);
+
+    Ok(())
 }
 
 struct Config {
