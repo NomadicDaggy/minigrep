@@ -9,7 +9,7 @@ fn main() {
     let args: Vec<String> = env::args().collect();
 
     let config = Config::new(&args).unwrap_or_else(|err| {
-        eprintln!("Problem parsing arguments: {}", err);  // eprintl! prints to stderr
+        eprintln!("Problem parsing arguments: {}", err); // eprintl! prints to stderr
         process::exit(1); // exit the program
     });
 
