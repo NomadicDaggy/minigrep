@@ -32,7 +32,18 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
 
 // The data referenced by a slice needs to be valud for the reference to be valid.
 pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
-    vec![]
+    let mut results = Vec::new();
+
+    // lines() returns an iterator
+    for line in contents.lines() {
+        // substr.contains(str) returns True if substr in str
+        if line.contains(query) {
+            // push on to vector
+            results.push(line);
+        }
+    }
+
+    results
 }
 
 // --- Tests
