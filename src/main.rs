@@ -7,21 +7,27 @@ fn main() {
     // Also, args will panic if we enter invalid unicode
     let args: Vec<String> = env::args().collect();
 
-    let (query, filename) = parse_config(&args);
+    let parse_config = parse_config(&args);
 
-    println!("Searching for \"{}\"", query);
-    println!("In file       \"{}\"", filename);
+    println!("Searching for \"{}\"", config.query);
+    println!("In file       \"{}\"", config.filename);
 
     // -------- Read file
-    let contents = fs::read_to_string(filename).expect("Something went wrong reading the file");
+    let contents =
+        fs::read_to_string(config.filename).expect("Something went wrong reading the file");
 
     println!("With text:\n{}", contents);
 }
 
-fn parse_config(args: &[String]) -> (&str, &str) {
-    // Save args into variables
-    let query = &args[1];
-    let filename = &args[2];
+struct Config {
+    query: String,
+    filename: String,
+}
 
-    (query, filename)
+fn parse_config(args: &[String]) -> Config {
+    // Save args into variables
+    let query = args[1].clone();
+    let filename = args[2].clone();
+
+    Config { query, filename }
 }
