@@ -7,7 +7,7 @@ fn main() {
     // Also, args will panic if we enter invalid unicode
     let args: Vec<String> = env::args().collect();
 
-    let parse_config = parse_config(&args);
+    let config = Config::new(&args);
 
     println!("Searching for \"{}\"", config.query);
     println!("In file       \"{}\"", config.filename);
@@ -24,10 +24,14 @@ struct Config {
     filename: String,
 }
 
-fn parse_config(args: &[String]) -> Config {
-    // Save args into variables
-    let query = args[1].clone();
-    let filename = args[2].clone();
+impl Config {
+    fn new(args: &[String]) -> Config {
+        // Save args into variables
+        // We have to use clone() here because args in the main function owns the values
+        // and will only let us borrow them.
+        let query = args[1].clone();
+        let filename = args[2].clone();
 
-    Config { query, filename }
+        Config { query, filename }
+    }
 }
