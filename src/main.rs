@@ -1,4 +1,6 @@
-use std::{env, error::Error, fs, process};
+use std::{env, process};
+
+use minigrep::Config;
 
 fn main() {
     // args returns an iterator of the cli arguments
@@ -15,41 +17,9 @@ fn main() {
     println!("In file       \"{}\"", config.filename);
 
     // if let was somewhat similar to unwrap_or_else
-    if let Err(e) = run(config) {
+    if let Err(e) = minigrep::run(config) {
         println!("Application error: {}", e);
 
         process::exit(1);
     };
-}
-
-// Box<dyn Error> is a trait object. It needs Error brought in at the top.
-// It stands for a type that implements the Error trait.
-fn run(config: Config) -> Result<(), Box<dyn Error>> {
-    // Read file
-    let contents = fs::read_to_string(config.filename)?; // ? will return error value upstream
-
-    println!("With text:\n{}", contents);
-
-    Ok(())
-}
-
-struct Config {
-    query: String,
-    filename: String,
-}
-
-impl Config {
-    fn new(args: &[String]) -> Result<Config, &'static str> {
-        if args.len() < 3 {
-            return Err("Not enough arguments");
-        }
-
-        // Save args into variables
-        // We have to use clone() here because args in the main function owns the values
-        // and will only let us borrow them.
-        let query = args[1].clone();
-        let filename = args[2].clone();
-
-        Ok(Config { query, filename })
-    }
 }
